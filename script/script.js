@@ -34,7 +34,6 @@ s2.textContent = time.getSeconds() % 10;
     if (time.getSeconds() == 0) {
       m1.textContent = Math.floor(time.getMinutes() / 10);
       m2.textContent = time.getMinutes() % 10;
-      list.appendChild(document.createTextNode("Hello codesandbox"));
     }
 
     s1.textContent = Math.floor(time.getSeconds() / 10);
