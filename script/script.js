@@ -23,21 +23,21 @@ s2.textContent = time.getSeconds() % 10;
 //* current time
 
 (() => {
-  setInterval(() => {
-    time = new Date();
+    setInterval(() => {
+        time = new Date();
 
-    if (time.getMinutes() == 0) {
-      h1.textContent = Math.floor(time.getHours() / 10);
-      h2.textContent = time.getHours() % 10;
-    }
+        if (time.getMinutes() == 0) {
+            h1.textContent = Math.floor(time.getHours() / 10);
+            h2.textContent = time.getHours() % 10;
+        }
 
-    if (time.getSeconds() == 0) {
-      m1.textContent = Math.floor(time.getMinutes() / 10);
-      m2.textContent = time.getMinutes() % 10;
-    }
+        if (time.getSeconds() == 0) {
+            m1.textContent = Math.floor(time.getMinutes() / 10);
+            m2.textContent = time.getMinutes() % 10;
+        }
 
-    s1.textContent = Math.floor(time.getSeconds() / 10);
-    s2.textContent = time.getSeconds() % 10;
-    time = null;
-  }, 1000);
+        s1.textContent = Math.floor(time.getSeconds() / 10);
+        s2.textContent = time.getSeconds() % 10;
+        time = null;
+    }, 1000);
 })();
