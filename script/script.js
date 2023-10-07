@@ -144,7 +144,6 @@ function hideRing() {
 
 function showRing(time) {
     alarmTime.textContent = time;
-    document.querySelector("body").style.filter = "blur(10px)";
     wakeup.style.zIndex = 10;
     wakeup.style.visibility = "visible";
 }
