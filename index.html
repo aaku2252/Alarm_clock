@@ -7,6 +7,10 @@
             content="width=device-width, initial-scale=1.0" />
         <title>Alarm Clock</title>
         <link
+            rel="shortcut icon"
+            href="./icons/alarm-clock.png"
+            type="image/x-icon" />
+        <link
             rel="stylesheet"
             href="./dist/input.css" />
         <link
@@ -14,14 +18,13 @@
             href="./dist/style.css" />
     </head>
 
-    <body
-        class="bg-gradient-to-tr from-indigo-400 from-10% via-sky-600 via-30% to-emerald-400 to-90% w-screen h-screen font-mono relative">
+    <body class="w-screen h-screen font-mono relative">
         <div
             class="wakeup absolute z-[-100] invisible rounded-2xl bg-gradient-to-tr from-indigo-400 from-10% via-sky-600 via-30% to-emerald-400 to-90% w-[300px] h-[250px] top-[20%] left-[50%] translate-x-[-50%] flex flex-col justify-between p-4 items-center shadow-2xl">
             <p class="font-bold text-4xl">Wake up!</p>
             <span class="alarmTime text-4xl mt-[-20px]"></span>
             <img
-                class="h-[70px] w-[70px]"
+                class="h-[70px] w-[70px] animate-wiggle"
                 src="./icons/alarm-clock.png"
                 alt="" />
             <button

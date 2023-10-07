@@ -17,8 +17,11 @@ let time = new Date();
 
 let hour;
 let minute;
-
 let ringTime = [];
+//>remove from the local array----------------------------------------------------------------
+function removeRingTime(time) {
+    ringTime.splice(ringTime.indexOf(time), 1);
+}
 
 //> starting the clock ------------------------------------------------------------------------
 h1.textContent = Math.floor(time.getHours() / 10);
@@ -41,7 +44,6 @@ for (let i = 0; i < localStorage.length; i++) {
 for (const x of alarms) {
     addAlarm(x);
 }
-console.log(alarms[0]);
 delete alarms;
 delete localStorage;
 
@@ -55,10 +57,11 @@ function addAlarm(text) {
     li.appendChild(document.createTextNode(text));
     li.appendChild(delBtn);
     list.appendChild(li);
+    alarmDateFormat(text);
     delBtn.addEventListener("click", () => {
         let text = li.textContent;
-     
-alarmDateFormat(text)		window.localStorage.removeItem(`alarm-${text}`);
+        removeRingTime(text);
+        window.localStorage.removeItem(`alarm-${text}`);
         list.removeChild(li);
         delete text;
     });
@@ -105,7 +108,26 @@ function alarmDateFormat(date) {
             hour = hour + 12;
         }
     }
-    ringTime.push(hour+":"+minute)
+    ringTime.push(
+        String(hour).padStart(2, "0") + ":" + String(minute).padStart(2, "0")
+    );
+}
+
+function alarmDateRemove(date) {
+    let hour = parseInt(date.slice(0, 2));
+    let minute = parseInt(date.slice(3, 5));
+    let text;
+
+    if (hour > 12) {
+        text = String(hour - 12).padStart(2, "0") + ":" + minute + " " + "PM";
+    } else if (hour == 12) {
+        text = 12 + " " + "PM";
+    } else {
+        text = date + " " + "AM";
+    }
+    delete hour;
+    delete minute;
+    return text;
 }
 
 //>ring the alarm bell----------------------------------------------------------------------------------
@@ -113,14 +135,19 @@ function alarmDateFormat(date) {
 function hideRing() {
     wakeup.style.zIndex = -10;
     wakeup.style.visibility = "hidden";
+    console.log(`alarm-${alarmDateRemove(alarmTime.textContent)}`);
+    removeRingTime(alarmTime.textContent);
+    window.localStorage.removeItem(
+        `alarm-${alarmDateRemove(alarmTime.textContent)}`
+    );
 }
 
 function showRing(time) {
     alarmTime.textContent = time;
+    document.querySelector("body").style.filter = "blur(10px)";
     wakeup.style.zIndex = 10;
     wakeup.style.visibility = "visible";
 }
-
 closeButton.addEventListener("click", hideRing);
 //>--------------------------------------------------------------------------------------------------------
 //* current time
@@ -128,7 +155,7 @@ closeButton.addEventListener("click", hideRing);
 (() => {
     setInterval(() => {
         time = new Date();
-		console.log(ringTime);
+
         if (time.getHours() >= 12) {
             ampm.textContent = "P";
         }
@@ -145,33 +172,32 @@ closeButton.addEventListener("click", hideRing);
 
         s1.textContent = Math.floor(time.getSeconds() / 10);
         s2.textContent = time.getSeconds() % 10;
+        switch (time.getHours() + ":" + time.getMinutes()) {
+            case ringTime[0]:
+                showRing(ringTime[0]);
+                removeRingTime(ringTime[0]);
+                localStorage.removeItem(ringTime[0]);
+                break;
 
-		switch (time.getHours()+":"+time.getMinutes) {
-		   case ringTime[0]:
-				ringTime.splice(0,1);
-				showRing(ringTime[0]);
-				localStorage.removeItem(ringTime[0])			
-		        break;
-				
-		   case ringTime[1]:
-				ringTime.splice(1,1);
-				showRing(ringTime[1]);
-				localStorage.removeItem(ringTime[1])			
-		        break;
-				
-		   case ringTime[2]:
-				ringTime.splice(2,1);
-				showRing(ringTime[2]);
-				localStorage.removeItem(ringTime[2])			
-		        break;
-		   case ringTime[3]:
-				ringTime.splice(3,1);
-				showRing(ringTime[3]);
-				localStorage.removeItem(ringTime[3])			
-		        break;
-		}
-		
+            case ringTime[1]:
+                showRing(ringTime[1]);
+                removeRingTime(ringTime[1]);
+                localStorage.removeItem(ringTime[1]);
+                break;
+
+            case ringTime[2]:
+                showRing(ringTime[2]);
+                removeRingTime(ringTime[2]);
+                localStorage.removeItem(ringTime[2]);
+                break;
+            case ringTime[3]:
+                showRing(ringTime[3]);
+                removeRingTime(ringTime[3]);
+                localStorage.removeItem(ringTime[3]);
+                break;
+        }
 
         time = null;
     }, 1000);
 })();
+console.log(ringTime);

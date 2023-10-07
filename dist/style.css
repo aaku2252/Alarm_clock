@@ -1,11 +1,17 @@
+body {
+    background: url(../img/evening.jpg);
+    background-size: cover;
+    background-position: center center;
+}
+
 .glass {
     background: linear-gradient(
         111deg,
-        p rgba(177, 193, 254, 0.1) 0%,
-        rgba(61, 79, 240, 0.1) 100%
+        p rgb(177, 193, 255) 0%,
+        rgb(61, 79, 240) 100%
     );
-    box-shadow: 0px 4px 24px 0px rgba(255, 255, 255, 0.15),
-        0px -4px 24px 0px rgba(205, 215, 250, 0.15);
+    box-shadow: 0px 4px 24px 0px rgba(255, 255, 255, 0.426),
+        0px -4px 24px 0px rgba(205, 215, 250, 0.484);
     backdrop-filter: blur(5px);
 }
 div > span {
@@ -20,7 +26,7 @@ ul {
 }
 li {
     padding: 4px 8px;
-    box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.951);
     backdrop-filter: blur(5px);
     border-radius: 10px;
     margin-bottom: 8px;
