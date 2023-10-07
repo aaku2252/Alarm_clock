@@ -55,10 +55,10 @@ function addAlarm(text) {
     li.appendChild(document.createTextNode(text));
     li.appendChild(delBtn);
     list.appendChild(li);
-    ringTime.push(text);
     delBtn.addEventListener("click", () => {
         let text = li.textContent;
-        window.localStorage.removeItem(`alarm-${text}`);
+     
+alarmDateFormat(text)		window.localStorage.removeItem(`alarm-${text}`);
         list.removeChild(li);
         delete text;
     });
@@ -96,7 +96,6 @@ btn.addEventListener("click", setAlarm);
 //>format alarm date -----------------------------------------------------------------------------
 
 function alarmDateFormat(date) {
-    // 04:23 PM
     let hour = parseInt(date.slice(0, 2));
     let minute = parseInt(date.slice(3, 5));
     let zone = date.slice(-2);
@@ -106,9 +105,8 @@ function alarmDateFormat(date) {
             hour = hour + 12;
         }
     }
-    console.log(hour);
+    ringTime.push(hour+":"+minute)
 }
-alarmDateFormat("12:23 PM");
 
 //>ring the alarm bell----------------------------------------------------------------------------------
 
@@ -130,6 +128,7 @@ closeButton.addEventListener("click", hideRing);
 (() => {
     setInterval(() => {
         time = new Date();
+		console.log(ringTime);
         if (time.getHours() >= 12) {
             ampm.textContent = "P";
         }
@@ -146,6 +145,32 @@ closeButton.addEventListener("click", hideRing);
 
         s1.textContent = Math.floor(time.getSeconds() / 10);
         s2.textContent = time.getSeconds() % 10;
+
+		switch (time.getHours()+":"+time.getMinutes) {
+		   case ringTime[0]:
+				ringTime.splice(0,1);
+				showRing(ringTime[0]);
+				localStorage.removeItem(ringTime[0])			
+		        break;
+				
+		   case ringTime[1]:
+				ringTime.splice(1,1);
+				showRing(ringTime[1]);
+				localStorage.removeItem(ringTime[1])			
+		        break;
+				
+		   case ringTime[2]:
+				ringTime.splice(2,1);
+				showRing(ringTime[2]);
+				localStorage.removeItem(ringTime[2])			
+		        break;
+		   case ringTime[3]:
+				ringTime.splice(3,1);
+				showRing(ringTime[3]);
+				localStorage.removeItem(ringTime[3])			
+		        break;
+		}
+		
 
         time = null;
     }, 1000);
