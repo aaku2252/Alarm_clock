@@ -199,4 +199,3 @@ closeButton.addEventListener("click", hideRing);
         time = null;
     }, 1000);
 })();
-console.log(ringTime);
